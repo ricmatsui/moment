@@ -3,10 +3,14 @@ import './prototype';
 
 import { createDuration } from './create';
 import { isDuration } from './constructor';
-import { getSetRelativeTimeThreshold } from './humanize';
+import {
+    getSetRelativeTimeThreshold,
+    getSetRelativeTimeRounding
+} from './humanize';
 
 export {
     createDuration,
     isDuration,
-    getSetRelativeTimeThreshold
+    getSetRelativeTimeThreshold,
+    getSetRelativeTimeRounding
 };

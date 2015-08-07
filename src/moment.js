@@ -33,8 +33,9 @@ import {
 
 import {
     isDuration,
-    createDuration as duration,
+    createDuration              as duration,
     getSetRelativeTimeThreshold as relativeTimeThreshold
+    getSetRelativeTimeRounding  as relativeTimeRounding
 } from './lib/duration/duration';
 
 import { normalizeUnits } from './lib/units/units';
@@ -64,5 +65,6 @@ moment.defineLocale          = defineLocale;
 moment.weekdaysShort         = weekdaysShort;
 moment.normalizeUnits        = normalizeUnits;
 moment.relativeTimeThreshold = relativeTimeThreshold;
+moment.relativeTimeRounding  = relativeTimeRounding;
 
 export default moment;

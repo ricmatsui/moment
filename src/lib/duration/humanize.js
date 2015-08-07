@@ -52,6 +52,14 @@ export function getSetRelativeTimeThreshold (threshold, limit) {
     return true;
 }
 
+// This function allows you to set a rounding function for relative time strings
+export function getSetRelativeTimeRounding (newRound) {
+    if (newRound === undefined) {
+        return round;
+    }
+    round = newRound;
+}
+
 export function humanize (withSuffix) {
     var locale = this.localeData();
     var output = relativeTime(this, !withSuffix, locale);
