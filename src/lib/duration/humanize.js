@@ -23,20 +23,42 @@ function relativeTime (posNegDuration, withoutSuffix, locale) {
     var months   = round(duration.as('M'));
     var years    = round(duration.as('y'));
 
-    var a = seconds < thresholds.s && ['s', seconds]  ||
-            minutes === 1          && ['m']           ||
-            minutes < thresholds.m && ['mm', minutes] ||
-            hours   === 1          && ['h']           ||
-            hours   < thresholds.h && ['hh', hours]   ||
-            days    === 1          && ['d']           ||
-            days    < thresholds.d && ['dd', days]    ||
-            months  === 1          && ['M']           ||
-            months  < thresholds.M && ['MM', months]  ||
-            years   === 1          && ['y']           || ['yy', years];
+    var a = (seconds < thresholds.s || minutes === 0) && ['s', seconds]  ||
+            minutes === 1                             && ['m']           ||
+            (minutes < thresholds.m || hours   === 0) && ['mm', minutes] ||
+            hours   === 1                             && ['h']           ||
+            (hours   < thresholds.h || days    === 0) && ['hh', hours]   ||
+            days    === 1                             && ['d']           ||
+            (days    < thresholds.d || months  === 0) && ['dd', days]    ||
+            months  === 1                             && ['M']           ||
+            (months  < thresholds.M || years   === 0) && ['MM', months]  ||
+            years   === 1                             && ['y']           || ['yy', years];
 
     a[2] = withoutSuffix;
     a[3] = +posNegDuration > 0;
     a[4] = locale;
+
+    if (round(0.8) === 0) {
+        console.log('------------------');
+        console.log({
+            's': duration.as('s'),
+            'm': duration.as('m'),
+            'h': duration.as('h'),
+            'd': duration.as('d'),
+            'M': duration.as('M'),
+            'y': duration.as('y')
+        });
+        console.log(JSON.stringify({
+            's': seconds,
+            'm': minutes,
+            'h': hours,
+            'd': days,
+            'M': months,
+            'y': years
+        }));
+        console.log(Math.floor === round);
+        console.log(a.slice(0, 4));
+    }
     return substituteTimeAgo.apply(null, a);
 }
 

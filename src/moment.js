@@ -34,7 +34,7 @@ import {
 import {
     isDuration,
     createDuration              as duration,
-    getSetRelativeTimeThreshold as relativeTimeThreshold
+    getSetRelativeTimeThreshold as relativeTimeThreshold,
     getSetRelativeTimeRounding  as relativeTimeRounding
 } from './lib/duration/duration';
 

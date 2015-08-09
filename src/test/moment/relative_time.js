@@ -3,7 +3,7 @@ import moment from '../../moment';
 
 module('relative time');
 
-test('default thresholds fromNow', function (assert) {
+test('default thresholds and rounding fromNow', function (assert) {
     var a = moment();
 
     // Seconds to minutes threshold
@@ -41,7 +41,7 @@ test('default thresholds fromNow', function (assert) {
     assert.equal(a.fromNow(), 'a year ago', 'Above default days to years threshold');
 });
 
-test('default thresholds toNow', function (assert) {
+test('default thresholds and rounding toNow', function (assert) {
     var a = moment();
 
     // Seconds to minutes threshold
@@ -133,4 +133,60 @@ test('retrive threshold settings', function (assert) {
     var minuteThreshold = moment.relativeTimeThreshold('m');
 
     assert.equal(minuteThreshold, 45, 'Can retrieve minute setting');
+});
+
+test('custom floor rounding', function (assert) {
+    // Rounding threshold
+    moment.relativeTimeRounding(Math.floor);
+
+    // Seconds rounding
+    var a = moment();
+    a.subtract(54, 'seconds');
+    assert.equal(a.fromNow(), 'a minute ago', 'Applying custom rounding to seconds above threshold');
+    a.subtract(1, 'seconds');
+    assert.equal(a.fromNow(), 'a minute ago', 'Applying custom rounding to seconds below threshold');
+
+    // Minutes rounding
+    a = moment();
+    a.subtract(54, 'minutes');
+    assert.equal(a.fromNow(), 'a minute ago', 'Applying custom rounding to hours above threshold');
+    a.subtract(1, 'minutes');
+    assert.equal(a.fromNow(), 'a minute ago', 'Applying custom rounding to hours below threshold');
+
+    // Hours rounding
+    a = moment();
+    a.subtract(1.5, 'hours');
+    assert.equal(a.fromNow(), 'an hour ago', 'Applying custom rounding to days above threshold');
+    a.subtract(1, 'hours');
+    assert.equal(a.fromNow(), 'an hour ago', 'Applying custom rounding to days below threshold');
+
+    // Days rounding
+    a = moment();
+    a.subtract(1.5, 'days');
+    assert.equal(a.fromNow(), 'a day ago', 'Applying custom rounding to months above threshold');
+    a.subtract(1, 'days');
+    assert.equal(a.fromNow(), 'a day ago', 'Applying custom rounding to months below threshold');
+
+    // Months rounding
+    a = moment();
+    a.subtract(1.5, 'months');
+    assert.equal(a.fromNow(), 'a month ago', 'Below custom days to years threshold');
+    a.subtract(1, 'months');
+    assert.equal(a.fromNow(), 'a month ago', 'Above custom days to years threshold');
+
+    // Year rounding
+    a = moment();
+    a.subtract(1.5, 'years');
+    assert.equal(a.fromNow(), 'a year ago', 'Below custom days to years threshold');
+    a.subtract(1, 'years');
+    assert.equal(a.fromNow(), 'a year ago', 'Above custom days to years threshold');
+
+    moment.relativeTimeRounding(Math.round);
+});
+
+test('retrive rounding settings', function (assert) {
+    moment.relativeTimeThreshold(Math.floor);
+    var minuteThreshold = moment.relativeTimeThreshold();
+
+    assert.equal(minuteThreshold, Math.floor, 'Can retrieve rounding setting');
 });
